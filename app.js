@@ -19,7 +19,21 @@ const server = http.createServer((req, res) => {
   }
   /// Redirecting
   if (url === "/message" && method === "POST") {
-    fs.writeFileSync("message.txt", "DUMMY");
+    const body = [];
+    /// listen events
+    req.on("data", (chunk) => {
+      console.log(chunk);
+      body.push(chunk);
+    });
+    req.on("end", () => {
+      /// parsing body requests
+      const parseBody = Buffer.concat(body).toString(); /// output: message=sth
+      /// get requests content
+      const message = parseBody.split("=")[1];
+      /// writing file
+      fs.writeFileSync("message.txt", message);
+    });
+
     res.statusCode = 302;
     res.setHeader("Location", "/");
     return res.end();
