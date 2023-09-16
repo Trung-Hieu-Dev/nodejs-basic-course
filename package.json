@@ -1,0 +1,12 @@
+{
+  "name": "basic-nodejs",
+  "version": "1.0.0",
+  "description": "NodeJS Course in Udemy",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "Hieu",
+  "license": "ISC"
+}
