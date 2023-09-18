@@ -1,32 +1,21 @@
-// nodejs
-// const http = require("http");
-// const routes = require("./routes");
-//
-// // create a local server
-// const server = http.createServer(routes);
-//
-// // test
-// server.listen(3000);
-
-// express
-const http = require("http");
 const express = require("express");
 
 const app = express();
 
 // middleware running in every incoming request
-app.use((req, res, next) => {
-  console.log("In the middleware");
-  next(); // allow the next middleware running
+app.use("/", (req, res, next) => {
+  console.log("This always run!");
+  next(); // allow next middleware running
 });
 
-app.use((req, res, next) => {
-  console.log("In the another middleware");
+app.use("/product", (req, res, next) => {
+  console.log("In the product middleware");
+  res.send("<h1>Hello from Product Page</h1>");
+});
+
+app.use("/", (req, res, next) => {
+  console.log("In the middleware");
   res.send("<h1>Hello from Express</h1>");
 });
 
 app.listen(3000);
-
-// const server = http.createServer(app);
-//
-// server.listen(3000);
