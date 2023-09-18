@@ -1,8 +1,19 @@
+// nodejs
+// const http = require("http");
+// const routes = require("./routes");
+//
+// // create a local server
+// const server = http.createServer(routes);
+//
+// // test
+// server.listen(3000);
+
+// express
 const http = require("http");
-const routes = require("./routes");
+const express = require("express");
 
-// create a local server
-const server = http.createServer(routes);
+const app = express();
 
-// test
+const server = http.createServer(app);
+
 server.listen(3000);
