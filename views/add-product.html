@@ -6,6 +6,7 @@
     <meta content="ie=edge" http-equiv="X-UA-Compatible" />
     <title>Add Product</title>
     <link href="/css/main.css" rel="stylesheet" />
+    <link href="/css/forms.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -21,14 +22,16 @@
     </header>
 
     <main>
-      <form action="/admin/add-product" class="product-form" method="POST">
-        <div class="form-control">
-          <label for="title">Title</label>
-          <input id="title" name="title" type="text" />
-        </div>
+      <div class="grid">
+        <form action="/admin/add-product" class="product-form" method="POST">
+          <div class="form-control">
+            <label for="title">Title</label>
+            <input id="title" name="title" type="text" />
+          </div>
 
-        <button type="submit">Add Product</button>
-      </form>
+          <button class="btn" type="submit">Add Product</button>
+        </form>
+      </div>
     </main>
   </body>
 </html>
