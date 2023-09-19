@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const rootDir = require("./utils/path");
 
 // using express router
-const adminRoutes = require("./routes/admin");
+const adminData = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 
 const app = express();
@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // static path
 app.use(express.static(path.join(rootDir, "public")));
 
-app.use("/admin", adminRoutes); // filtering paths
+app.use("/admin", adminData.routes); // filtering paths
 app.use(shopRoutes);
 
 // 404 page
