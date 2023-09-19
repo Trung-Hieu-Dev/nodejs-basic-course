@@ -10,6 +10,10 @@ const shopRoutes = require("./routes/shop");
 
 const app = express();
 
+// template engine configuration
+app.set("view engine", "pug");
+app.set("views", "views");
+
 // parse body
 app.use(bodyParser.urlencoded({ extended: false }));
 // static path
