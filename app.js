@@ -4,9 +4,14 @@ const bodyParser = require("body-parser");
 
 const rootDir = require("./utils/path");
 
+
+
 // using express router
-const adminData = require("./routes/admin");
+const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
+
+// controllers
+const errController = require("./controllers/error");
 
 const app = express();
 
@@ -20,13 +25,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(rootDir, "public")));
 
 // routes
-app.use("/admin", adminData.routes); // filtering paths
+app.use("/admin", adminRoutes); // filtering paths
 app.use(shopRoutes);
 
 // 404 page
-app.use((req, res, next) => {
-  // res.status(404).sendFile(path.join(rootDir, "views", "404.html"));
-  res.status(404).render("404", { pageTitle: "Page Not Found" }); // pass data to template { pageTitle: "Page Not Found" }
-});
+app.use(errController.getErrorPage);
 
 app.listen(3000);
