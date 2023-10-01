@@ -21,9 +21,14 @@ exports.getProducts = (req, res, next) => {
 	});
 };
 
+//Loading Product Detail Data
 exports.getProduct = (req, res, next) => {
 	const prodId = req.params.productId;
-	console.log(prodId);
+	console.log(
+		Product.findById(prodId, (prod) => {
+			console.log(prod);
+		})
+	);
 	res.redirect("/");
 };
 
