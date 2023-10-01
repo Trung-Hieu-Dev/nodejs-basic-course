@@ -1,36 +1,31 @@
 <%- include('../includes/head.ejs') %>
-    <link href="/css/product.css" rel="stylesheet" />
-    <link href="/css/forms.css" rel="stylesheet" />
-  </head>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/product.css">
+</head>
 
-  <body>
-    <%- include('../includes/navigation.ejs') %>
+<body>
+   <%- include('../includes/navigation.ejs') %>
+
     <main>
-      <div class="grid">
-        <form action="/admin/add-product" class="product-form" method="POST">
-          <div class="form-control">
-            <label for="title">Title</label>
-            <input id="title" name="title" type="text" />
-          </div>
+        <form class="product-form" action="/admin/add-product" method="POST">
+            <div class="form-control">
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title">
+            </div>
+            <div class="form-control">
+                <label for="imageUrl">Image URL</label>
+                <input type="text" name="imageUrl" id="imageUrl">
+            </div>
+            <div class="form-control">
+                <label for="price">Price</label>
+                <input type="number" name="price" id="price" step="0.01">
+            </div>
+            <div class="form-control">
+                <label for="description">Description</label>
+                <textarea name="description" id="description" rows="5"></textarea>
+            </div>
 
-          <div class="form-control">
-            <label for="imageUrl">Image Url</label>
-            <input id="imageUrl" name="imageUrl" type="text" />
-          </div>
-
-          <div class="form-control">
-            <label for="price">Price</label>
-            <input id="price" name="price" type="number" step="0.01"/>
-          </div>
-
-          <div class="form-control">
-            <label for="description">Description</label>
-            <textarea id="description" name="description" type="text" rows="5"></textarea>
-          </div>
-
-          <button class="btn" type="submit">Add Product</button>
+            <button class="btn" type="submit">Add Product</button>
         </form>
-      </div>
     </main>
-
 <%- include('../includes/end.ejs') %>

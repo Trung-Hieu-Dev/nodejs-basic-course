@@ -1,8 +1,1 @@
-[
-	{
-		"title": "First Book",
-		"imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLFmGBkABi495_qD5CYDdRS3DZsVMY0ESGAA&usqp=CAU",
-		"price": "35",
-		"description": "There's nothing like curling up with a captivating story that transports you to new worlds and broadens your horizons."
-	}
-]
+[{"title":"First Book","imageUrl":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLFmGBkABi495_qD5CYDdRS3DZsVMY0ESGAA&usqp=CAU","price":"35","description":"There's nothing like curling up with a captivating story that transports you to new worlds and broadens your horizons."},{"title":"Second Book","imageUrl":"https://images.ctfassets.net/pwv49hug9jad/51KTBfqpv0wrHbhidYhyue/82f452e4d47c0ee19efd29cbbcf172e4/Book-and-beyond-664-2019.jpeg?fm=webp","price":"45","description":"This is second book for beginner"}]
