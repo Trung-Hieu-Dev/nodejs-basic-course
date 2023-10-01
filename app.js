@@ -1,5 +1,5 @@
-const path = require("path");
 const express = require("express");
+const path = require("path");
 const bodyParser = require("body-parser");
 
 const rootDir = require("./utils/path");
@@ -25,8 +25,6 @@ app.use(express.static(path.join(rootDir, "public")));
 // routes
 app.use("/admin", adminRoutes); // filtering paths
 app.use(shopRoutes);
-
-// 404 page
 app.use(errController.getErrorPage);
 
 app.listen(3000);
