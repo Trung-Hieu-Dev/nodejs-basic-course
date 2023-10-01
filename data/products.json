@@ -1,1 +1,8 @@
-[{"title":"book 1"},{"title":"Second Book"}]
+[
+	{
+		"title": "First Book",
+		"imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLFmGBkABi495_qD5CYDdRS3DZsVMY0ESGAA&usqp=CAU",
+		"price": "35",
+		"description": "There's nothing like curling up with a captivating story that transports you to new worlds and broadens your horizons."
+	}
+]
