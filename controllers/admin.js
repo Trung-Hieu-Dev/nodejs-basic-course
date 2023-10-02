@@ -65,3 +65,10 @@ exports.getProducts = (req, res, next) => {
 		}); // render template
 	});
 };
+
+exports.getDeleteProduct = // /admin/products => GET
+	(req, res, next) => {
+		const prodId = req.body.productId;
+		Product.deleteById(prodId);
+		res.redirect("/admin/products");
+	};
