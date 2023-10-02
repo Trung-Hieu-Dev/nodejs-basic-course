@@ -12,5 +12,12 @@
 		"price": "22",
 		"description": "The second book for this year",
 		"id": "0.41773066845258966"
+	},
+	{
+		"title": "Third Book",
+		"imageUrl": "https://images.ctfassets.net/pwv49hug9jad/51KTBfqpv0wrHbhidYhyue/82f452e4d47c0ee19efd29cbbcf172e4/Book-and-beyond-664-2019.jpeg?fm=webp",
+		"price": "33",
+		"description": "The third book for advance NodeJS",
+		"id": "2023-10-02T03:27:29.240Z"
 	}
 ]
