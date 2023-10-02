@@ -9,8 +9,11 @@ router.get("/add-product", adminController.getAddProduct); // load creating form
 // /admin/add-product => POST
 router.post("/add-product", adminController.postAddProduct); // create product
 
-// /admin/add-product/12345 => GET
+// /admin/edit-product/12345 => GET
 router.get("/edit-product/:prodId", adminController.getEditProduct); // load edit form view
+
+// /admin/edit-product => POST
+router.post("/edit-product", adminController.postEditProduct); // edit product
 
 // /admin/products => GET
 router.get("/products", adminController.getProducts);
