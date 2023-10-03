@@ -55,12 +55,20 @@ exports.getCart = (req, res, next) => {
 	
 };
 
-exports.postCart = (req, res, next) => {
+exports.getPostCart = (req, res, next) => {
 	const proId = req.body.productId;
 	Product.findById(proId, (product) => {
 		Cart.addProduct(proId, product.price);
+		res.redirect("/cart");
 	});
-	res.redirect("/cart");
+};
+
+exports.getDeleteCart = (req, res, next) => {
+	const proId = req.body.productId;
+	Product.findById(proId, (product) => {
+		Cart.deleteById(proId, product.price);
+		res.redirect("/cart");
+	});
 };
 
 exports.getOrders = (req, res, next) => {
