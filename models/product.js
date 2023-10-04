@@ -14,7 +14,11 @@ module.exports = class Product {
 	}
 
 	save() {
-		
+		// inserting data into database
+		return db.execute(
+			'INSERT INTO products (title, price, description, imageUrl) VALUES (?,?,?,?)',
+			[this.title, this.price, this.description, this.imageUrl]
+		)
 	}
 
 	static fetchAll() {
@@ -22,10 +26,10 @@ module.exports = class Product {
 	}
 
 	static findById(id) {
-		
+
 	}
 
 	static deleteById(id) {
-		
+
 	}
 };
