@@ -3,13 +3,14 @@ const Product = require("../models/product");
 const Cart = require("../models/cart");
 
 exports.getIndex = (req, res, next) => {
-	Product.fetchAll((products) => {
+	Product.fetchAll().then(([rows, fieldData]) => { // destructuring [rows, fieldData] data from retrieved data from database
 		res.render("shop/index", {
-			prods: products,
+			prods: rows, // rows are products
 			pageTitle: "Shop",
 			path: "/",
 		}); // render template
-	});
+	}).catch(err => console.log(err));
+	
 };
 
 exports.getProducts = (req, res, next) => {

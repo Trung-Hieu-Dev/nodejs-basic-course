@@ -4,12 +4,15 @@ const bodyParser = require("body-parser");
 
 const rootDir = require("./utils/path");
 
+
 // using express router
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 
+
 // controllers
 const errController = require("./controllers/error");
+
 
 const app = express();
 
