@@ -13,7 +13,7 @@ module.exports = pool.promise()
 */
 
 // Option 2: Using Sequelize (mysql2 must be installed together with sequelize)
-const Sequelize = require('sequelize')
+const { Sequelize } = require('sequelize')
 
 const sequelize = new Sequelize('node_complete', 'root', '', {
     dialect: 'mysql',

@@ -1,7 +1,7 @@
 /* using Sequelize library */
 
 // connecting to database
-const Sequelize = require('sequelize')
+const { Sequelize } = require('sequelize')
 const sequelize = require('../utils/database')
 
 // define Model (item in table of database)

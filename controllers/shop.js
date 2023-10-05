@@ -3,24 +3,48 @@ const Product = require("../models/product");
 const Cart = require("../models/cart");
 
 exports.getIndex = (req, res, next) => {
-	Product.fetchAll().then(([rows, fieldData]) => { // destructuring [rows, fieldData] data from retrieved data from database
-		res.render("shop/index", {
-			prods: rows, // rows are products
-			pageTitle: "Shop",
-			path: "/",
-		}); // render template
-	}).catch(err => console.log(err));
+	/** using Sequelize to fetch data from database */
+	Product
+		.findAll()
+		.then(products => {
+			res.render("admin/products", {
+				prods: products,
+				pageTitle: "Admin Products",
+				path: "/admin/products",
+			}); // render template
+		})
+		.catch()
+
+	// Product.fetchAll().then(([rows, fieldData]) => { // destructuring [rows, fieldData] data from retrieved data from database
+	// 	res.render("shop/index", {
+	// 		prods: rows, // rows are products
+	// 		pageTitle: "Shop",
+	// 		path: "/",
+	// 	}); // render template
+	// }).catch(err => console.log(err));
 
 };
 
 exports.getProducts = (req, res, next) => {
-	Product.fetchAll().then(([rows, fieldData]) => {
-		res.render("shop/product-list", {
-			prods: rows,
-			pageTitle: "All Products",
-			path: "/products",
-		});
-	}).catch(err => console.log(err));
+	/** using Sequelize to fetch data from database */
+	Product
+		.findAll()
+		.then(products => {
+			res.render("admin/products", {
+				prods: products,
+				pageTitle: "Admin Products",
+				path: "/admin/products",
+			}); // render template
+		})
+		.catch()
+
+	// Product.fetchAll().then(([rows, fieldData]) => {
+	// 	res.render("shop/product-list", {
+	// 		prods: rows,
+	// 		pageTitle: "All Products",
+	// 		path: "/products",
+	// 	});
+	// }).catch(err => console.log(err));
 
 
 };

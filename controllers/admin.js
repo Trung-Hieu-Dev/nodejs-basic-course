@@ -14,6 +14,18 @@ exports.postAddProduct = (req, res, next) => {
 	const description = req.body.description;
 	const price = req.body.price;
 
+	/** using Sequelize to Insert Data & Create a Product into database */
+	Product
+		.create({
+			title,
+			price,
+			imageUrl,
+			description
+		})
+		.then(() => console.log('Created Product!'))
+		.catch(err => console.log(err))
+
+	/* using mysql2
 	const product = new Product(null, title, imageUrl, price, description);
 
 	// inserting data into database
@@ -23,6 +35,7 @@ exports.postAddProduct = (req, res, next) => {
 			res.redirect("/");
 		})
 		.catch(err => console.log(err));
+	*/
 };
 
 exports.getEditProduct = (req, res, next) => {
@@ -31,6 +44,7 @@ exports.getEditProduct = (req, res, next) => {
 		return res.redirect("/");
 	}
 	const prodId = req.params.prodId;
+
 	Product.findById(prodId, (prod) => {
 		if (!prod) {
 			return res.redirect("/");
@@ -63,16 +77,29 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
+	/** using Sequelize to fetch data from database */
 	Product
-		.fetchAll()
-		.then(([products]) => {
+		.findAll()
+		.then(products => {
 			res.render("admin/products", {
 				prods: products,
 				pageTitle: "Admin Products",
 				path: "/admin/products",
 			}); // render template
 		})
-		.catch(err => err);
+		.catch()
+
+
+	// Product
+	// 	.fetchAll()
+	// 	.then(([products]) => {
+	// 		res.render("admin/products", {
+	// 			prods: products,
+	// 			pageTitle: "Admin Products",
+	// 			path: "/admin/products",
+	// 		}); // render template
+	// 	})
+	// 	.catch(err => err);
 
 
 };

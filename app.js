@@ -35,7 +35,7 @@ app.use(errController.getErrorPage);
 sequelize
     .sync()
     .then(result => {
-        console.log(result);
+        console.log('Tables created!');
         app.listen(3000);
     })
     .catch(err => {
