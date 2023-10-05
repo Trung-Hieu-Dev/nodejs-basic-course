@@ -22,7 +22,10 @@ exports.postAddProduct = (req, res, next) => {
 			imageUrl,
 			description
 		})
-		.then(() => console.log('Created Product!'))
+		.then(() => {
+			console.log('Created Product!')
+			res.redirect('/admin/products')
+		})
 		.catch(err => console.log(err))
 
 	/* using mysql2
@@ -139,10 +142,22 @@ exports.getProducts = (req, res, next) => {
 exports.getDeleteProduct = // /admin/products => GET
 	(req, res, next) => {
 		const prodId = req.body.productId;
+		/** using Sequelize update a Product into database */
 		Product
-			.deleteById(prodId)
-			.then(() => {
-				res.redirect("/admin/products");
+			.findByPk(prodId)
+			.then((prod) => {
+				return prod.destroy() // delete product
 			})
-			.catch(err => console.log(err));
+			.then(result => {
+				console.log('Deleted Product!')
+				res.redirect("/")
+			})
+			.catch(err => console.log(err))
+
+		// Product
+		// 	.deleteById(prodId)
+		// 	.then(() => {
+		// 		res.redirect("/admin/products");
+		// 	})
+		// 	.catch(err => console.log(err));
 	};
