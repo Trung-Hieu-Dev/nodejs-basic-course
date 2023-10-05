@@ -45,17 +45,33 @@ exports.getEditProduct = (req, res, next) => {
 	}
 	const prodId = req.params.prodId;
 
-	Product.findById(prodId, (prod) => {
-		if (!prod) {
-			return res.redirect("/");
-		}
-		res.render("admin/edit-product", {
-			path: "/admin/edit-product",
-			pageTitle: "Edit Product",
-			editing: editMode,
-			product: prod,
-		});
-	});
+	/** using Sequelize to fetch a Product into database */
+	Product
+		.findByPk(prodId)
+		.then((prod) => {
+			if (!prod) {
+				return res.redirect("/");
+			}
+			res.render("admin/edit-product", {
+				path: "/admin/edit-product",
+				pageTitle: "Edit Product",
+				editing: editMode,
+				product: prod,
+			});
+		})
+		.catch(err => console.log(err))
+
+	// Product.findById(prodId, (prod) => {
+	// 	if (!prod) {
+	// 		return res.redirect("/");
+	// 	}
+	// 	res.render("admin/edit-product", {
+	// 		path: "/admin/edit-product",
+	// 		pageTitle: "Edit Product",
+	// 		editing: editMode,
+	// 		product: prod,
+	// 	});
+	// });
 };
 
 exports.postEditProduct = (req, res, next) => {
@@ -65,15 +81,31 @@ exports.postEditProduct = (req, res, next) => {
 	const updatedDescription = req.body.description;
 	const updatedPrice = req.body.price;
 
-	const updatedProduct = new Product(
-		prodId,
-		updatedTitle,
-		updatedImageUrl,
-		updatedPrice,
-		updatedDescription
-	);
-	updatedProduct.save();
-	res.redirect("/");
+	/** using Sequelize update a Product into database */
+	Product
+		.findByPk(prodId)
+		.then((prod) => {
+			prod.title = updatedTitle,
+				prod.price = updatedPrice,
+				prod.imageUrl = updatedImageUrl,
+				prod.description = updatedDescription
+			return prod.save() // update if item existed or create new one
+		})
+		.then(result => {
+			console.log('Updated Product!')
+			res.redirect("/")
+		})
+		.catch(err => console.log(err))
+
+	// const updatedProduct = new Product(
+	// 	prodId,
+	// 	updatedTitle,
+	// 	updatedImageUrl,
+	// 	updatedPrice,
+	// 	updatedDescription
+	// );
+	// updatedProduct.save();
+	// res.redirect("/");
 };
 
 exports.getProducts = (req, res, next) => {

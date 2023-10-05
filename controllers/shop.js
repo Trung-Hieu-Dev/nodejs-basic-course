@@ -7,10 +7,10 @@ exports.getIndex = (req, res, next) => {
 	Product
 		.findAll()
 		.then(products => {
-			res.render("admin/products", {
+			res.render("shop/product-list", {
 				prods: products,
-				pageTitle: "Admin Products",
-				path: "/admin/products",
+				pageTitle: "All Products",
+				path: "/products",
 			}); // render template
 		})
 		.catch()
@@ -30,10 +30,10 @@ exports.getProducts = (req, res, next) => {
 	Product
 		.findAll()
 		.then(products => {
-			res.render("admin/products", {
+			res.render("shop/product-list", {
 				prods: products,
-				pageTitle: "Admin Products",
-				path: "/admin/products",
+				pageTitle: "All Products",
+				path: "/products",
 			}); // render template
 		})
 		.catch()
@@ -52,13 +52,23 @@ exports.getProducts = (req, res, next) => {
 //Loading Product Detail Data
 exports.getProduct = (req, res, next) => {
 	const prodId = req.params.productId;
-	Product.findById(prodId).then(([product]) => {
+
+	/** using Sequelize to fetch single data from database */
+	Product.findByPk(prodId).then((product) => {
 		res.render("shop/product-detail", {
-			product: product[0],
-			pageTitle: product[0].title,
+			product: product,
+			pageTitle: product.title,
 			path: `/products`,
 		});
 	}).catch(err => console.log(err));
+
+	// Product.findById(prodId).then(([product]) => {
+	// 	res.render("shop/product-detail", {
+	// 		product: product[0],
+	// 		pageTitle: product[0].title,
+	// 		path: `/products`,
+	// 	});
+	// }).catch(err => console.log(err));
 
 
 };
