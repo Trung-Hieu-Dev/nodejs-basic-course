@@ -11,6 +11,10 @@ const errController = require("./controllers/error");
 // import database configuration
 const sequelize = require('./utils/database')
 
+// models
+const Product = require('./models/product')
+const User = require('./models/user')
+
 const app = express();
 
 // template engine configuration
@@ -31,9 +35,13 @@ app.use("/admin", adminRoutes); // filtering paths
 app.use(shopRoutes);
 app.use(errController.getErrorPage);
 
+// define associations (tables relationship)
+Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' }) // {constraints: true, onDelete: 'CASCADE'}: When delete user, products gone
+User.hasMany(Product) // optional
+
 // Syncing JS Definitions to the Database. Create table by defined model
 sequelize
-    .sync()
+    .sync({ force: true }) // create all tables again with empty data
     .then(result => {
         console.log('Tables created!');
         app.listen(3000);

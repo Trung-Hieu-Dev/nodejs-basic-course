@@ -17,7 +17,7 @@ const { Sequelize } = require('sequelize')
 
 const sequelize = new Sequelize('node_complete', 'root', '', {
     dialect: 'mysql',
-    host: 'localhost'
+    host: 'localhost',
 }) // arguments: (database, user, password, option)
 
 module.exports = sequelize
