@@ -15,7 +15,7 @@ exports.postAddProduct = (req, res, next) => {
 	const price = req.body.price;
 
 	// add data to database with relationship
-	/// create associate obj
+	/// create Product with User Id
 	req.user
 		.createProduct({ // createProduct method will automatically create by associate obj depending on tables
 			title,
@@ -63,10 +63,11 @@ exports.getEditProduct = (req, res, next) => {
 	}
 	const prodId = req.params.prodId;
 
-	/** using Sequelize to fetch a Product into database */
-	Product
-		.findByPk(prodId)
-		.then((prod) => {
+	// fetch related Product where userId === 1 and productId = ?
+	req.user
+		.getProducts({ where: { id: prodId } })
+		.then((prods) => {
+			const prod = prods[0]
 			if (!prod) {
 				return res.redirect("/");
 			}
@@ -78,6 +79,22 @@ exports.getEditProduct = (req, res, next) => {
 			});
 		})
 		.catch(err => console.log(err))
+
+	/** using Sequelize to fetch a Product into database */
+	// Product
+	// 	.findByPk(prodId)
+	// 	.then((prod) => {
+	// 		if (!prod) {
+	// 			return res.redirect("/");
+	// 		}
+	// 		res.render("admin/edit-product", {
+	// 			path: "/admin/edit-product",
+	// 			pageTitle: "Edit Product",
+	// 			editing: editMode,
+	// 			product: prod,
+	// 		});
+	// 	})
+	// 	.catch(err => console.log(err))
 
 	// Product.findById(prodId, (prod) => {
 	// 	if (!prod) {
@@ -127,9 +144,8 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-	/** using Sequelize to fetch data from database */
-	Product
-		.findAll()
+	req.user
+		.getProducts()
 		.then(products => {
 			res.render("admin/products", {
 				prods: products,
@@ -138,6 +154,18 @@ exports.getProducts = (req, res, next) => {
 			}); // render template
 		})
 		.catch()
+
+	/** using Sequelize to fetch data from database */
+	// Product
+	// 	.findAll()
+	// 	.then(products => {
+	// 		res.render("admin/products", {
+	// 			prods: products,
+	// 			pageTitle: "Admin Products",
+	// 			path: "/admin/products",
+	// 		}); // render template
+	// 	})
+	// 	.catch()
 
 
 	// Product
@@ -157,6 +185,7 @@ exports.getProducts = (req, res, next) => {
 exports.getDeleteProduct = // /admin/products => GET
 	(req, res, next) => {
 		const prodId = req.body.productId;
+
 		/** using Sequelize update a Product into database */
 		Product
 			.findByPk(prodId)
