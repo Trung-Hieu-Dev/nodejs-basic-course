@@ -14,6 +14,8 @@ const sequelize = require('./utils/database')
 // models
 const Product = require('./models/product')
 const User = require('./models/user')
+const Cart = require('./models/cart')
+const CartItem = require('./models/cart-item')
 
 const app = express();
 
@@ -49,11 +51,15 @@ app.use(errController.getErrorPage);
 // define associations (tables relationship)
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' }) // {constraints: true, onDelete: 'CASCADE'}: When delete user, products gone
 User.hasMany(Product) // optional
+User.hasOne(Cart)
+Cart.belongsTo(User)
+Cart.belongsToMany(Product, { through: CartItem })
+Product.belongsToMany(Cart, { through: CartItem })
 
 // Syncing JS Definitions to the Database. Create table by defined model
 sequelize
-    // .sync({ force: true }) // create all tables again with empty data
-    .sync()
+    .sync({ force: true }) // create all tables again with empty data
+    // .sync()
     .then(result => {
         return User.findByPk(1)
     })

@@ -1,3 +1,23 @@
+/* using Sequelize library */
+
+// connecting to database
+const { Sequelize } = require('sequelize')
+const sequelize = require('../utils/database')
+
+// define Model (item in table of database)
+const Cart = sequelize.define('cart', {
+	id: {
+		type: Sequelize.INTEGER,
+		autoIncrement: true,
+		allowNull: false,
+		primaryKey: true,
+	}
+})
+
+module.exports = Cart
+
+
+/*
 const fs = require("fs");
 const path = require("path");
 const rootDir = require("../utils/path");
@@ -69,3 +89,4 @@ module.exports = class Cart {
 		});
 	}
 };
+*/
