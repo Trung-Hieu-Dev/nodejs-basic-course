@@ -14,9 +14,10 @@ exports.postAddProduct = (req, res, next) => {
 	const description = req.body.description;
 	const price = req.body.price;
 
-	/** using Sequelize to Insert Data & Create a Product into database */
-	Product
-		.create({
+	// add data to database with relationship
+	/// create associate obj
+	req.user
+		.createProduct({ // createProduct method will automatically create by associate obj depending on tables
 			title,
 			price,
 			imageUrl,
@@ -27,6 +28,20 @@ exports.postAddProduct = (req, res, next) => {
 			res.redirect('/admin/products')
 		})
 		.catch(err => console.log(err))
+
+	/** using Sequelize to Insert Data & Create a Product into database */
+	// Product
+	// 	.create({
+	// 		title,
+	// 		price,
+	// 		imageUrl,
+	// 		description
+	// 	})
+	// 	.then(() => {
+	// 		console.log('Created Product!')
+	// 		res.redirect('/admin/products')
+	// 	})
+	// 	.catch(err => console.log(err))
 
 	/* using mysql2
 	const product = new Product(null, title, imageUrl, price, description);

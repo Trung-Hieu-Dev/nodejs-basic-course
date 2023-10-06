@@ -35,8 +35,8 @@ app.use((req, res, next) => {
     User
         .findByPk(1)
         .then((user) => {
-            req.user = user
-            next()
+            req.user = user // create associate object
+            next() // pass uer through all app
         })
         .catch(err => console.log(err))
 })
