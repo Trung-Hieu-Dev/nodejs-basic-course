@@ -30,6 +30,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // static path
 app.use(express.static(path.join(rootDir, "public")));
 
+// middleware => data available in all app
+app.use((req, res, next) => {
+    User
+        .findByPk(1)
+        .then((user) => {
+            req.user = user
+            next()
+        })
+        .catch(err => console.log(err))
+})
+
 // routes
 app.use("/admin", adminRoutes); // filtering paths
 app.use(shopRoutes);
@@ -41,9 +52,19 @@ User.hasMany(Product) // optional
 
 // Syncing JS Definitions to the Database. Create table by defined model
 sequelize
-    .sync({ force: true }) // create all tables again with empty data
+    // .sync({ force: true }) // create all tables again with empty data
+    .sync()
     .then(result => {
-        console.log('Tables created!');
+        return User.findByPk(1)
+    })
+    .then(user => {
+        if (!user) {
+            return User.create({ name: 'Admin', email: 'admin@mail.com' })
+        }
+        return user
+    })
+    .then((user) => {
+        // console.log(user);
         app.listen(3000);
     })
     .catch(err => {
