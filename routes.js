@@ -20,7 +20,7 @@ const requestHandler = (req, res) => {
     const body = [];
     /// listen events
     req.on("data", (chunk) => {
-      console.log(chunk);
+      // console.log(chunk);
       body.push(chunk);
     });
     return req.on("end", () => {

@@ -38,7 +38,7 @@ app.use((req, res, next) => {
         .findByPk(1)
         .then((user) => {
             req.user = user // create associate object
-            next() // pass uer through all app
+            next() // pass user through all app
         })
         .catch(err => console.log(err))
 })
@@ -56,10 +56,11 @@ Cart.belongsTo(User)
 Cart.belongsToMany(Product, { through: CartItem })
 Product.belongsToMany(Cart, { through: CartItem })
 
+
 // Syncing JS Definitions to the Database. Create table by defined model
 sequelize
-    .sync({ force: true }) // create all tables again with empty data
-    // .sync()
+    // .sync({ force: true }) // create all tables again with empty data
+    .sync()
     .then(result => {
         return User.findByPk(1)
     })
@@ -71,6 +72,9 @@ sequelize
     })
     .then((user) => {
         // console.log(user);
+        return user.createCart()
+    })
+    .then((cart) => {
         app.listen(3000);
     })
     .catch(err => {
