@@ -1,73 +1,23 @@
-/* using Sequelize library */
+const getDb = require('../utils/database').getDb
 
-// connecting to database
-const { Sequelize } = require('sequelize')
-const sequelize = require('../utils/database')
-
-// define Model (item in table of database)
-const Product = sequelize.define('product', {
-	id: {
-		type: Sequelize.INTEGER,
-		autoIncrement: true,
-		allowNull: false,
-		primaryKey: true,
-	},
-	title: Sequelize.STRING,
-	price: {
-		type: Sequelize.DOUBLE,
-		allowNull: false
-	},
-	imageUrl: {
-		type: Sequelize.STRING,
-		allowNull: false
-	},
-	description: {
-		type: Sequelize.STRING,
-		allowNull: false
-	}
-})
-
-module.exports = Product
-
-
-
-
-
-// configure database
-/* using mysql2
-const db = require('../utils/database')
-const Cart = require("./cart");
-
-
-
-module.exports = class Product {
-	constructor(id, title, imageUrl, price, description) {
-		this.id = id;
+class Product {
+	constructor(title, price, imageUrl, description) {
 		this.title = title;
-		this.imageUrl = imageUrl;
 		this.price = price;
+		this.imageUrl = imageUrl;
 		this.description = description;
 	}
 
 	save() {
-		// inserting data into database
-		return db.execute(
-			'INSERT INTO products (title, price, description, imageUrl) VALUES (?,?,?,?)',
-			[this.title, this.price, this.description, this.imageUrl]
-		)
+		const db = getDb();
+		return db.collection('products')
+			.insertOne(this)
+			.then(result => {
+				console.log(result);
+			})
+			.catch(err => console.log(err))
 	}
+}
 
-	static fetchAll() {
-		return db.execute('SELECT * FROM products') // retrieving data from database
-	}
 
-	static findById(id) {
-		return db.execute('SELECT * FROM products WHERE products.id=?', [id])
-	}
-
-	static deleteById(id) {
-		return db.execute('DELETE FROM products WHERE products.id=?', [id])
-	}
-};
-
-*/
+module.exports = Product

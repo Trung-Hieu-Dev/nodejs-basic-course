@@ -1,23 +1,28 @@
-/*
-const mysql = require('mysql2')
+const mongodb = require('mongodb')
+const MongoClient = mongodb.MongoClient
 
-// configure database connection
-const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'node_complete'
-})
+let _db;
 
-module.exports = pool.promise()
-*/
+const mongoConnect = (callback) => {
+    MongoClient
+        .connect('mongodb+srv://admin:admin123@cluster0.nv9juva.mongodb.net/shop?retryWrites=true&w=majority')
+        .then(client => {
+            console.log('Connected!');
+            _db = client.db();
+            callback()
+        })
+        .catch(err => {
+            console.log(err)
+            throw err;
+        })
+}
 
-// Option 2: Using Sequelize (mysql2 must be installed together with sequelize)
-const { Sequelize } = require('sequelize')
+const getDb = () => {
+    if (_db) {
+        return _db
+    }
+    throw 'No database found!'
+}
 
-const sequelize = new Sequelize('node_complete', 'root', '', {
-    dialect: 'mysql',
-    host: 'localhost',
-}) // arguments: (database, user, password, option)
-
-module.exports = sequelize
+exports.mongoConnect = mongoConnect
+exports.getDb = getDb
