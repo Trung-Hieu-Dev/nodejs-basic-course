@@ -1,6 +1,5 @@
 // data
 const Product = require("../models/product");
-const Cart = require("../models/cart");
 
 exports.getIndex = (req, res, next) => {
 	/** using Sequelize to fetch data from database */
@@ -168,6 +167,25 @@ exports.getDeleteCart = (req, res, next) => {
 	// 	res.redirect("/cart");
 	// });
 };
+
+exports.getPostOrder = (req, res, next) => {
+	req.user.getCart()
+		.then(cart => {
+			return cart.getProducts()
+		})
+		.then(products => {
+			return req.user.createOrder()
+				.then(order => {
+					return order.addProduct(products.map(product => {
+						product.orderItem = { quantity: product.cartItem.quantity }
+						return product
+					}))
+				})
+				.catch(err => console.log(err))
+		})
+		.then(result => console.log(result))
+		.catch(err => err)
+}
 
 exports.getOrders = (req, res, next) => {
 	res.render("shop/orders", {

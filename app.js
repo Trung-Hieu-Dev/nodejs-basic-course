@@ -66,8 +66,8 @@ Order.belongsToMany(Product, { through: OrderItem })
 
 // Syncing JS Definitions to the Database. Create table by defined model
 sequelize
-    .sync({ force: true }) // create all tables again with empty data
-    // .sync()
+    // .sync({ force: true }) // create all tables again with empty data
+    .sync()
     .then(result => {
         return User.findByPk(1)
     })
