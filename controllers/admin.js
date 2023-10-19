@@ -1,4 +1,7 @@
 const Product = require("../models/product");
+const mongodb = require('mongodb')
+
+const ObjectId = mongodb.ObjectId
 
 exports.getAddProduct = (req, res, next) => {
 	res.render("admin/edit-product", {
@@ -26,7 +29,7 @@ exports.postAddProduct = (req, res, next) => {
 };
 
 
-/*
+
 exports.getEditProduct = (req, res, next) => {
 	const editMode = req.query.edit;
 	if (!editMode) {
@@ -34,10 +37,8 @@ exports.getEditProduct = (req, res, next) => {
 	}
 	const prodId = req.params.prodId;
 
-	req.user
-		.getProducts({ where: { id: prodId } })
-		.then((prods) => {
-			const prod = prods[0]
+	Product.findById(prodId)
+		.then((prod) => {
 			if (!prod) {
 				return res.redirect("/");
 			}
@@ -58,15 +59,15 @@ exports.postEditProduct = (req, res, next) => {
 	const updatedDescription = req.body.description;
 	const updatedPrice = req.body.price;
 
-	Product
-		.findByPk(prodId)
-		.then((prod) => {
-			prod.title = updatedTitle,
-				prod.price = updatedPrice,
-				prod.imageUrl = updatedImageUrl,
-				prod.description = updatedDescription
-			return prod.save() // update if item existed or create new one
-		})
+	const product = new Product({
+		title: updatedTitle,
+		price: updatedPrice,
+		imageUrl: updatedImageUrl,
+		description: updatedDescription,
+		id: new ObjectId(prodId)
+	})
+
+	product.save()
 		.then(result => {
 			console.log('Updated Product!')
 			res.redirect("/")
@@ -75,8 +76,8 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-	req.user
-		.getProducts()
+	Product
+		.fetchAll()
 		.then(products => {
 			res.render("admin/products", {
 				prods: products,
@@ -87,18 +88,17 @@ exports.getProducts = (req, res, next) => {
 		.catch()
 };
 
-exports.getDeleteProduct = // /admin/products => GET
-	(req, res, next) => {
-		const prodId = req.body.productId;
-		Product
-			.findByPk(prodId)
-			.then((prod) => {
-				return prod.destroy() // delete product
-			})
-			.then(result => {
-				console.log('Deleted Product!')
-				res.redirect("/")
-			})
-			.catch(err => console.log(err))
-	};
-*/
+// exports.getDeleteProduct = // /admin/products => GET
+// 	(req, res, next) => {
+// 		const prodId = req.body.productId;
+// 		Product
+// 			.findByPk(prodId)
+// 			.then((prod) => {
+// 				return prod.destroy() // delete product
+// 			})
+// 			.then(result => {
+// 				console.log('Deleted Product!')
+// 				res.redirect("/")
+// 			})
+// 			.catch(err => console.log(err))
+// 	};
