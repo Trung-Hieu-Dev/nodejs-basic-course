@@ -9,6 +9,8 @@ const mongoConnect = require('./utils/database').mongoConnect
 // controllers
 const errController = require("./controllers/error");
 
+// models
+const User = require("./models/user");
 
 const app = express();
 
@@ -27,14 +29,13 @@ app.use(express.static(path.join(rootDir, "public")));
 
 // middleware => data available in all app
 app.use((req, res, next) => {
-    // User
-    //     .findByPk(1)
-    //     .then((user) => {
-    //         req.user = user
-    //         next()
-    //     })
-    //     .catch(err => console.log(err))
-    next()
+    User
+        .findById('6530af23b3552f58cd0048b5')
+        .then((user) => {
+            req.user = user
+            next()
+        })
+        .catch(err => console.log(err))
 })
 
 // routes
