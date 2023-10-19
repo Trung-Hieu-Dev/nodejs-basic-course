@@ -43,6 +43,6 @@ app.use("/admin", adminRoutes);
 // app.use(errController.getErrorPage);
 
 mongoConnect(() => {
-    app.listen(3000)
+    app.listen(process.env.DEV_PORT)
 })
 
