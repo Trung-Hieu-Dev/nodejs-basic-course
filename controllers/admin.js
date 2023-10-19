@@ -88,17 +88,13 @@ exports.getProducts = (req, res, next) => {
 		.catch()
 };
 
-// exports.getDeleteProduct = // /admin/products => GET
-// 	(req, res, next) => {
-// 		const prodId = req.body.productId;
-// 		Product
-// 			.findByPk(prodId)
-// 			.then((prod) => {
-// 				return prod.destroy() // delete product
-// 			})
-// 			.then(result => {
-// 				console.log('Deleted Product!')
-// 				res.redirect("/")
-// 			})
-// 			.catch(err => console.log(err))
-// 	};
+exports.getDeleteProduct = // /admin/products => GET
+	(req, res, next) => {
+		const prodId = req.body.productId;
+		Product
+			.deleteById(prodId)
+			.then(result => {
+				res.redirect("/")
+			})
+			.catch(err => console.log(err))
+	};
