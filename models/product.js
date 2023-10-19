@@ -7,7 +7,7 @@ class Product {
 		this.price = price;
 		this.imageUrl = imageUrl;
 		this.description = description;
-		this._id = new mongodb.ObjectId(id);
+		this._id = id ? new mongodb.ObjectId(id) : null;
 	}
 
 	save() {
@@ -15,12 +15,10 @@ class Product {
 		let dbOp;
 
 		if (this._id) {
-			console.log('edit');
 			// update
 			dbOp = db.collection('products')
 				.updateOne({ _id: this._id }, { $set: this })
 		} else {
-			console.log('insert');
 			// insert
 			dbOp = db.collection('products').insertOne(this)
 		}
