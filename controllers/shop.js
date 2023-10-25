@@ -41,19 +41,20 @@ exports.getProduct = (req, res, next) => {
 		.catch(err => console.log(err));
 };
 
-// exports.getCart = (req, res, next) => {
-// 	req.user
-// 		.getCart()
-// 		.then(products => {
-// 			res.render("shop/cart", {
-// 				path: "/cart",
-// 				pageTitle: "Cart",
-// 				products: products
-// 			});
-// 		})
-// 		.catch(err => console.log(err))
+exports.getCart = (req, res, next) => {
+	req.user
+		.populate('cart.items.productId') // get more data from product
+		.then(user => {
+			const products = user.cart.items
+			res.render("shop/cart", {
+				path: "/cart",
+				pageTitle: "Cart",
+				products: products
+			});
+		})
+		.catch(err => console.log(err))
 
-// };
+};
 
 exports.getPostCart = (req, res, next) => {
 	const proId = req.body.productId;
