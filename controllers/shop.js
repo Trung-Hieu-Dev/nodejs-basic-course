@@ -55,15 +55,15 @@ exports.getProduct = (req, res, next) => {
 
 // };
 
-// exports.getPostCart = (req, res, next) => {
-// 	const proId = req.body.productId;
-// 	Product.findById(proId)
-// 		.then(product => {
-// 			req.user.addToCart(product);
-// 			res.redirect('/cart')
-// 		})
-// 		.catch(err => console.log(err))
-// };
+exports.getPostCart = (req, res, next) => {
+	const proId = req.body.productId;
+	Product.findById(proId)
+		.then(product => {
+			req.user.addToCart(product);
+			res.redirect('/cart')
+		})
+		.catch(err => console.log(err))
+};
 
 // exports.getDeleteCart = (req, res, next) => {
 // 	const proId = req.body.productId;

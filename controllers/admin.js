@@ -75,9 +75,10 @@ exports.postEditProduct = (req, res, next) => {
 exports.getProducts = (req, res, next) => {
 	Product
 		.find()
-		.populate('userId') // get user by relational userId
+		// .select('title price -_id') // chose what you want to received. In this case, product data only: title, price except id
+		// .populate('userId') // get user by relational userId
 		.then(products => {
-			console.log(products); // products obj and user obj with userId
+			// console.log(products); // products obj and user obj with userId
 			res.render("admin/products", {
 				prods: products,
 				pageTitle: "Admin Products",
