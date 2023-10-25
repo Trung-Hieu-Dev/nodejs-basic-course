@@ -66,15 +66,15 @@ exports.getPostCart = (req, res, next) => {
 		.catch(err => console.log(err))
 };
 
-// exports.getDeleteCart = (req, res, next) => {
-// 	const proId = req.body.productId;
-// 	req.user.deleteItemFromCart(proId)
-// 		.then(() => {
-// 			res.redirect("/cart")
-// 		})
-// 		.catch(err => console.log(err))
+exports.getDeleteCart = (req, res, next) => {
+	const proId = req.body.productId;
+	req.user.deleteItemFromCart(proId)
+		.then(() => {
+			res.redirect("/cart")
+		})
+		.catch(err => console.log(err))
 
-// };
+};
 
 // exports.getPostOrder = (req, res, next) => {
 // 	req.user
