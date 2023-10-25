@@ -11,7 +11,7 @@ const mongoose = require('mongoose')
 const errController = require("./controllers/error");
 
 // models
-const User = require("./models/user");
+// const User = require("./models/user");
 
 const app = express();
 
@@ -29,20 +29,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(rootDir, "public")));
 
 // middleware => data available in all app
-app.use((req, res, next) => {
-    User
-        .findById('6530af23b3552f58cd0048b5')
-        .then((user) => {
-            req.user = new User(user.email, user.password, user.cart, user._id)
-            next()
-        })
-        .catch(err => console.log(err))
-})
+// app.use((req, res, next) => {
+//     User
+//         .findById('6530af23b3552f58cd0048b5')
+//         .then((user) => {
+//             req.user = new User(user.email, user.password, user.cart, user._id)
+//             next()
+//         })
+//         .catch(err => console.log(err))
+// })
 
 // routes
-app.use("/admin", adminRoutes);
-app.use(shopRoutes);
-// app.use(errController.getErrorPage);
+// app.use("/admin", adminRoutes);
+// app.use(shopRoutes);
+app.use(errController.getErrorPage);
 
 // connect to mongodb by mongoose
 mongoose
