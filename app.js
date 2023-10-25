@@ -21,7 +21,7 @@ app.set("views", "views");
 
 // using express router
 const adminRoutes = require("./routes/admin");
-const shopRoutes = require("./routes/shop");
+// const shopRoutes = require("./routes/shop");
 
 // parse body
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -40,7 +40,7 @@ app.use(express.static(path.join(rootDir, "public")));
 // })
 
 // routes
-// app.use("/admin", adminRoutes);
+app.use("/admin", adminRoutes);
 // app.use(shopRoutes);
 app.use(errController.getErrorPage);
 
