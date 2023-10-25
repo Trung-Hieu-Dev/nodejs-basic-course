@@ -11,7 +11,7 @@ const mongoose = require('mongoose')
 const errController = require("./controllers/error");
 
 // models
-// const User = require("./models/user");
+const User = require("./models/user");
 
 const app = express();
 
@@ -29,15 +29,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(rootDir, "public")));
 
 // middleware => data available in all app
-// app.use((req, res, next) => {
-//     User
-//         .findById('6530af23b3552f58cd0048b5')
-//         .then((user) => {
-//             req.user = new User(user.email, user.password, user.cart, user._id)
-//             next()
-//         })
-//         .catch(err => console.log(err))
-// })
+app.use((req, res, next) => {
+    User
+        .findById('6538b7f4e7f011e1a0ea239a')
+        .then((user) => {
+            req.user = new User(user.email, user.password, user.cart, user._id)
+            next()
+        })
+        .catch(err => console.log(err))
+})
 
 // routes
 app.use("/admin", adminRoutes);
@@ -52,6 +52,22 @@ mongoose
     .then(() => {
         console.log('DB Connected!');
         app.listen(3000);
+    })
+    .then(() => {
+        User.findOne()
+            .then((user) => {
+                if (!user) {
+                    const user = new User({
+                        name: 'Admin',
+                        email: 'admin@mail.com',
+                        cart: {
+                            items: []
+                        }
+                    })
+                    user.save()
+                }
+            })
+
     })
     .catch(err => console.log(err))
 
