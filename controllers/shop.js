@@ -1,4 +1,5 @@
 // data
+const Order = require("../models/order");
 const Product = require("../models/product");
 
 exports.getIndex = (req, res, next) => {
@@ -76,28 +77,43 @@ exports.getDeleteCart = (req, res, next) => {
 
 };
 
-// exports.getPostOrder = (req, res, next) => {
-// 	req.user
-// 		.addOrder()
-// 		.then(result => {
-// 			res.redirect("/orders")
-// 		})
-// 		.catch(err => err)
-// }
+exports.getPostOrder = (req, res, next) => {
+	req.user
+		.populate('cart.items.productId') // get more data from product
+		.then(user => {
+			const products = user.cart.items.map(i => {
+				return { quantity: i.quantity, product: { ...i.productId._doc } }
+			})
 
-// exports.getOrders = (req, res, next) => {
-// 	req.user.getOrders()
-// 		.then(orders => {
-// 			res.render("shop/orders", {
-// 				path: "/orders",
-// 				pageTitle: "Orders",
-// 				orders: orders
-// 			});
-// 		})
-// 		.catch(err => console.log(err))
+			const order = new Order({
+				products: products,
+				user: {
+					name: req.user.name,
+					userId: req.user,
+				}
+			})
+
+			return order.save()
+		})
+		.then(() => {
+			res.redirect('/orders')
+		})
+		.catch(err => console.log(err))
+}
+
+exports.getOrders = (req, res, next) => {
+	req.user.getOrders()
+		.then(orders => {
+			res.render("shop/orders", {
+				path: "/orders",
+				pageTitle: "Orders",
+				orders: orders
+			});
+		})
+		.catch(err => console.log(err))
 
 
-// };
+};
 
 // exports.getCheckout = (req, res, next) => {
 // 	res.render("shop/checkout", {
