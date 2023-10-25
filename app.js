@@ -4,7 +4,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const rootDir = require("./utils/path");
-const mongoConnect = require('./utils/database').mongoConnect
+require('dotenv').config();
+const mongoose = require('mongoose')
 
 // controllers
 const errController = require("./controllers/error");
@@ -43,7 +44,14 @@ app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 // app.use(errController.getErrorPage);
 
-mongoConnect(() => {
-    app.listen(process.env.DEV_PORT)
-})
+// connect to mongodb by mongoose
+mongoose
+    .connect(
+        `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.nv9juva.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`
+    )
+    .then(() => {
+        console.log('DB Connected!');
+        app.listen(3000);
+    })
+    .catch(err => console.log(err))
 
