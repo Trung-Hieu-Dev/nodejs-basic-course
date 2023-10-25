@@ -21,7 +21,8 @@ const productSchema = new Schema({
     },
     userId: {
         type: Schema.Types.ObjectId,
-        ref: 'User' // define relation
+        ref: 'User', // define relation
+        required: true
     }
 })
 
